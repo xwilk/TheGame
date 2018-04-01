@@ -23,7 +23,6 @@ include_directories(${SDL2_INCLUDE_DIR})
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
-# Look in the Lesson0 subdirectory to find its CMakeLists.txt so we can build the executable
 add_subdirectory(game)
 
 

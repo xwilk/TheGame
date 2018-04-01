@@ -45,7 +45,7 @@ inline void tile(
     Height screenHeight,
     int tileSize)
 {
-    int x, y = 0;
+    int x = 0, y = 0;
     while (x < screenWidth)
     {
         while (y < screenHeight)
