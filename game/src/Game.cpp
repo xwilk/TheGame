@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 #include "Game.hpp"
-#include "TempUtils.hpp"
+#include "Texture.hpp"
 #include "ResourcePath.hpp"
 
 const auto SCREEN_WIDTH = Width{640};
@@ -19,8 +19,8 @@ Game::Game()
 
 void Game::run()
 {
-    auto image = loadTexture(getResourcePath("game") + "hello_grid.png", _renderer);
-    auto background = loadTexture(getResourcePath("game") + "nk_flag.bmp", _renderer);
+    auto image = Texture(getResourcePath("game") + "hello_grid.png", _renderer);
+    auto background = Texture(getResourcePath("game") + "nk_flag.bmp", _renderer);
 
     SDL_Event e;
     bool quit = false;
@@ -84,7 +84,7 @@ void Game::run()
         }
 
         SDL_RenderClear(_renderer);
-        tile(background, _renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
+        background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
 
         useClip = counter / 3;
         if (useClip > 3)

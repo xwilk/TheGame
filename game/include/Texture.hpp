@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Surface.hpp"
+#include "Dimensions.hpp"
 #include "Renderer.hpp"
 
 
@@ -30,6 +30,12 @@ public:
         int y,
         SDL_Rect* clip = nullptr,
         double rotation = 0.0);
+
+    void tile(
+        Renderer&,
+        Width screenWidth,
+        Height screenHeight,
+        int tileSize);
 
     operator SDL_Texture*()
     {

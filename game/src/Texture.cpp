@@ -16,6 +16,20 @@ Texture::~Texture()
     SDL_DestroyTexture(_texture);
 }
 
+namespace
+{
+
+void renderTexture(
+    SDL_Texture* texture,
+    Renderer& renderer,
+    SDL_Rect* dst,
+    SDL_Rect* clip = nullptr)
+{
+    SDL_RenderCopy(renderer, texture, clip, dst);
+}
+
+}
+
 void Texture::render(
     Renderer& renderer,
     int x,
@@ -30,4 +44,25 @@ void Texture::render(
     SDL_QueryTexture(_texture, NULL, NULL, &dst.w, &dst.h);
     SDL_RenderCopyEx(
         renderer, _texture, clip, &dst, rotation, nullptr, SDL_FLIP_NONE);
+}
+
+void Texture::tile(
+    Renderer& renderer,
+    Width screenWidth,
+    Height screenHeight,
+    int tileSize)
+{
+    int x = 0, y = 0;
+    while (x < screenWidth)
+    {
+        while (y < screenHeight)
+        {
+            SDL_Rect dst = {x, y, tileSize, tileSize};
+            renderTexture(_texture, renderer, &dst);
+            y += tileSize;
+        }
+
+        x += tileSize;
+        y = 0;
+    }
 }
