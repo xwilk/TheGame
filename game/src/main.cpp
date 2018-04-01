@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "TempUtils.hpp"
+#include "Logging.hpp"
 
 
 int main()
@@ -7,7 +7,7 @@ try
 {
     Game game{};
     game.run();
-    
+
     return 0;
 }
 catch (const std::runtime_error& e)
