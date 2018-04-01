@@ -44,43 +44,40 @@ void Game::run()
     {
         while (SDL_PollEvent(&e))
         {
-            if (e.type == SDL_QUIT
-             or e.type == SDL_MOUSEBUTTONDOWN)
+            if (e.type == SDL_QUIT)
             {
                 quit = true;
             }
+        }
 
-            if (e.type == SDL_KEYDOWN
-             && e.key.keysym.sym == SDLK_DOWN)
-            {
-                y += 10;
-                counter++;
-                ++rotation;
-            }
+        //Set texture based on current keystate
+        const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
+        if (currentKeyStates[SDL_SCANCODE_DOWN])
+        {
+            y += 10;
+            counter++;
+            ++rotation;
+        }
 
-            if (e.type == SDL_KEYDOWN
-             && e.key.keysym.sym == SDLK_UP)
-            {
-                y -= 10;
-                counter++;
-                ++rotation;
-            }
+        if (currentKeyStates[SDL_SCANCODE_UP])
+        {
+            y -= 10;
+            counter++;
+            ++rotation;
+        }
 
-            if (e.type == SDL_KEYDOWN
-             && e.key.keysym.sym == SDLK_LEFT)
-            {
-                x -= 10;
-                counter++;
-                ++rotation;
-            }
+        if (currentKeyStates[SDL_SCANCODE_LEFT])
+        {
+            x -= 10;
+            counter++;
+            ++rotation;
+        }
 
-            if (e.type == SDL_KEYDOWN
-             && e.key.keysym.sym == SDLK_RIGHT)
-            {
-                x += 10;
-                counter++;
-                ++rotation;
-            }
+        if (currentKeyStates[SDL_SCANCODE_RIGHT])
+        {
+            x += 10;
+            counter++;
+            ++rotation;
         }
 
         SDL_RenderClear(_renderer);
