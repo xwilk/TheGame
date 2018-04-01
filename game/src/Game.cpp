@@ -26,6 +26,7 @@ void Game::run()
     bool quit = false;
     int x = 100, y = 100;
     int counter = 0;
+    double rotation = 0.0;
 
     SDL_Rect clips[4];
     for (auto i = 0; i < 4; ++i)
@@ -54,6 +55,7 @@ void Game::run()
             {
                 y += 10;
                 counter++;
+                ++rotation;
             }
 
             if (e.type == SDL_KEYDOWN
@@ -61,6 +63,7 @@ void Game::run()
             {
                 y -= 10;
                 counter++;
+                ++rotation;
             }
 
             if (e.type == SDL_KEYDOWN
@@ -68,6 +71,7 @@ void Game::run()
             {
                 x -= 10;
                 counter++;
+                ++rotation;
             }
 
             if (e.type == SDL_KEYDOWN
@@ -75,6 +79,7 @@ void Game::run()
             {
                 x += 10;
                 counter++;
+                ++rotation;
             }
         }
 
@@ -88,7 +93,7 @@ void Game::run()
             counter = 0;
         }
 
-        renderTexture(image, _renderer, x, y, &clips[useClip], /*rotation*/counter);
+        image.render(_renderer, x, y, &clips[useClip], rotation);
         SDL_RenderPresent(_renderer);
     }
 }

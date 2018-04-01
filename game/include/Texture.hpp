@@ -21,25 +21,15 @@ public:
 class Texture
 {
 public:
-    explicit Texture(
-        const std::string& filePath,
-        Renderer& renderer)
-    {
-        _texture = IMG_LoadTexture(renderer, filePath.c_str());
+    explicit Texture(const std::string& filePath, Renderer&);
+    ~Texture();
 
-        if (_texture == nullptr)
-            throw TextureLoadingError("CreateTextureFromSurface");
-    }
-
-    ~Texture()
-    {
-        SDL_DestroyTexture(_texture);
-    }
-
-    operator bool()
-    {
-        return _texture != nullptr;
-    }
+    void render(
+        Renderer&,
+        int x,
+        int y,
+        SDL_Rect* clip = nullptr,
+        double rotation = 0.0);
 
     operator SDL_Texture*()
     {
