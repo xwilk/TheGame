@@ -88,7 +88,7 @@ void Game::run()
             counter = 0;
         }
 
-        renderTexture(image, _renderer, x, y, &clips[useClip]);
+        renderTexture(image, _renderer, x, y, &clips[useClip], /*rotation*/counter);
         SDL_RenderPresent(_renderer);
     }
 }

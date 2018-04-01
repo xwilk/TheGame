@@ -18,19 +18,30 @@ inline void renderTexture(
     SDL_RenderCopy(renderer, texture, clip, dst);
 }
 
+inline void renderWithRotation(
+    Texture& texture,
+    Renderer& renderer,
+    const SDL_Rect* dst,
+    const SDL_Rect* clip = nullptr,
+    double rotation = 0.0)
+{
+    SDL_RenderCopyEx(renderer, texture, clip, dst, rotation, nullptr, SDL_FLIP_NONE);
+}
+
 inline void renderTexture(
-    Texture& texture, 
-    Renderer& renderer, 
-    int x, 
+    Texture& texture,
+    Renderer& renderer,
+    int x,
     int y,
-    SDL_Rect* clip = nullptr)
+    SDL_Rect* clip = nullptr,
+    double rotation = 0.0)
 {
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
 
     SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
-    renderTexture(texture, renderer, &dst, clip);
+    renderWithRotation(texture, renderer, &dst, clip, rotation);
 }
 
 inline Texture loadTexture(const std::string& filePath, Renderer& renderer)
@@ -39,9 +50,9 @@ inline Texture loadTexture(const std::string& filePath, Renderer& renderer)
 }
 
 inline void tile(
-    Texture& texture, 
-    Renderer& renderer, 
-    Width screenWidth, 
+    Texture& texture,
+    Renderer& renderer,
+    Width screenWidth,
     Height screenHeight,
     int tileSize)
 {
@@ -61,9 +72,9 @@ inline void tile(
 }
 
 inline void renderInCenter(
-    Texture& texture, 
-    Renderer& renderer, 
-    Width screenWidth, 
+    Texture& texture,
+    Renderer& renderer,
+    Width screenWidth,
     Height screenHeight)
 {
     int w, h;
