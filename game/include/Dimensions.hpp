@@ -21,3 +21,9 @@ public:
 private:
     int _h;
 };
+
+struct Grid
+{
+    Width xSize;
+    Height ySize;
+};

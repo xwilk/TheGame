@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <vector>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -21,14 +22,20 @@ public:
 class Texture
 {
 public:
-    explicit Texture(const std::string& filePath, Renderer&);
+    explicit Texture(
+        const std::string& filePath,
+        Renderer&,
+        Width spriteWidth,
+        Height spriteHeight,
+        Grid);
+
+
     ~Texture();
 
     void render(
         Renderer&,
         int x,
         int y,
-        SDL_Rect* clip = nullptr,
         double rotation = 0.0);
 
     void tile(
@@ -37,6 +44,11 @@ public:
         Height screenHeight,
         int tileSize);
 
+    void nextClip();
+
 private:
+    unsigned _currentClip = 0;
+    std::vector<SDL_Rect> _clips;
+
     SDL_Texture* _texture = nullptr;
 };

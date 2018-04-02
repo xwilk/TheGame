@@ -3,12 +3,25 @@
 
 Texture::Texture(
     const std::string& filePath,
-    Renderer& renderer)
+    Renderer& renderer,
+    Width spriteWidth,
+    Height spriteHeight,
+    Grid grid)
 {
     _texture = IMG_LoadTexture(renderer, filePath.c_str());
 
     if (_texture == nullptr)
         throw TextureLoadingError("CreateTextureFromSurface");
+
+    for (int i = 0; i < grid.xSize * grid.ySize; ++i)
+    {
+        _clips.emplace_back(SDL_Rect{
+            i % grid.xSize * spriteWidth,
+            i / grid.ySize * spriteHeight,
+            spriteWidth,
+            spriteHeight
+        });
+    }
 }
 
 Texture::~Texture()
@@ -23,9 +36,10 @@ void renderTexture(
     SDL_Texture* texture,
     Renderer& renderer,
     SDL_Rect* dst,
-    SDL_Rect* clip = nullptr)
+    SDL_Rect* clip = nullptr,
+    double rotation = 0.0)
 {
-    SDL_RenderCopy(renderer, texture, clip, dst);
+    SDL_RenderCopyEx(renderer, texture, clip, dst, rotation, nullptr, SDL_FLIP_NONE);
 }
 
 }
@@ -34,7 +48,6 @@ void Texture::render(
     Renderer& renderer,
     int x,
     int y,
-    SDL_Rect* clip,
     double rotation)
 {
     SDL_Rect dst;
@@ -42,8 +55,7 @@ void Texture::render(
     dst.y = y;
 
     SDL_QueryTexture(_texture, NULL, NULL, &dst.w, &dst.h);
-    SDL_RenderCopyEx(
-        renderer, _texture, clip, &dst, rotation, nullptr, SDL_FLIP_NONE);
+    renderTexture(_texture, renderer, &dst, &_clips[_currentClip], rotation);
 }
 
 void Texture::tile(
@@ -64,5 +76,17 @@ void Texture::tile(
 
         x += tileSize;
         y = 0;
+    }
+}
+
+void Texture::nextClip()
+{
+    if (_currentClip < _clips.size() - 1)
+    {
+        ++_currentClip;
+    }
+    else
+    {
+        _currentClip = 0;
     }
 }
