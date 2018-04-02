@@ -37,11 +37,6 @@ public:
         Height screenHeight,
         int tileSize);
 
-    operator SDL_Texture*()
-    {
-        return _texture;
-    }
-
 private:
     SDL_Texture* _texture = nullptr;
 };
