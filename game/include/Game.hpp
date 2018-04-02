@@ -1,6 +1,7 @@
-#pragma once 
+#pragma once
 
 #include "Sdl.hpp"
+#include "FrameRate.hpp"
 #include "Window.hpp"
 #include "Renderer.hpp"
 #include "Dimensions.hpp"
@@ -15,6 +16,7 @@ public:
 
 private:
     Sdl _sdl;
+    FrameRate _frame;
     Window _window;
     Renderer _renderer;
 };

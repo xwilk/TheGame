@@ -11,6 +11,7 @@ const int TILE_SIZE = 32;
 const int SPRITE_WIDTH = 128;
 
 
+
 Game::Game()
     : _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
       _renderer(_window)
@@ -42,6 +43,7 @@ void Game::run()
 
     while (!quit)
     {
+        _frame.start();
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -50,7 +52,6 @@ void Game::run()
             }
         }
 
-        //Set texture based on current keystate
         const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
         if (currentKeyStates[SDL_SCANCODE_DOWN])
         {
@@ -92,5 +93,7 @@ void Game::run()
 
         image.render(_renderer, x, y, &clips[useClip], rotation);
         SDL_RenderPresent(_renderer);
+
+        _frame.delay();
     }
 }
