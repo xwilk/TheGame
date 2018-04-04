@@ -4,7 +4,6 @@
 #include <vector>
 
 #include <SDL.h>
-#include <SDL_image.h>
 
 #include "Dimensions.hpp"
 #include "Renderer.hpp"
