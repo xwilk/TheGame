@@ -48,15 +48,15 @@ void renderTexture(
 
 void Texture::render(
     Renderer& renderer,
-    int x,
-    int y,
+    Point position,
     double rotation)
 {
     SDL_Rect dst;
-    dst.x = x;
-    dst.y = y;
-
     SDL_QueryTexture(_texture, NULL, NULL, &dst.w, &dst.h);
+
+    dst.x = position.x - (dst.w / 2);
+    dst.y = position.y - (dst.h / 2);
+
     renderTexture(_texture, renderer, &dst, &_clips[_currentClip], rotation);
 }
 

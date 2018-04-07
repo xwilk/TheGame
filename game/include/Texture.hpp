@@ -7,6 +7,7 @@
 
 #include "Dimensions.hpp"
 #include "Renderer.hpp"
+#include "Point.hpp"
 
 
 class TextureLoadingError : public std::runtime_error
@@ -33,8 +34,7 @@ public:
 
     void render(
         Renderer&,
-        int x,
-        int y,
+        Point position,
         double rotation = 0.0);
 
     void tile(

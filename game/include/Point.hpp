@@ -1,17 +1,13 @@
+#pragma once
+
 #include <SDL.h>
 
 
 class Point
 {
 public:
-    Point(int x, int y) {}
+    explicit Point(float x, float y) : x(x), y(y) {}
 
-    operator SDL_Point()
-    {
-        return SDL_Point{_x, _y};
-    }
-
-private:
-    int _x;
-    int _y;
+    float x;
+    float y;
 };
