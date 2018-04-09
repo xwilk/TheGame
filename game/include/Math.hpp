@@ -166,6 +166,11 @@ public:
 		return Vector2(vec.x * scalar, vec.y * scalar);
 	}
 
+	friend Vector2 operator/(const Vector2& vec, int divider)
+	{
+		return Vector2(vec.x / divider, vec.y / divider);
+	}
+
 	// Scalar *=
 	Vector2& operator*=(float scalar)
 	{

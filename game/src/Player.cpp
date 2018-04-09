@@ -1,6 +1,12 @@
 #include "Player.hpp"
 
 
+Point getForwardVector(float rotation)
+{
+    return Point(Math::Sin(rotation), -Math::Cos(rotation));
+}
+
+
 void Player::increaseSpeed()
 {
     _speed = 2;
@@ -8,31 +14,42 @@ void Player::increaseSpeed()
 
 void Player::decreaseSpeed()
 {
-    _speed = 0;
+    _speed = -1;
 }
 
-void Player::rotateTowards(Point point)
+void Player::rotateTowards(Point target)
 {
-    auto target = Vector2(point.x, point.y);
-    auto pos = Vector2(_position.x, _position.y);
-
-    auto vectorBetweenPoints = target - pos;
+    auto vectorBetweenPoints = target - _position;
     vectorBetweenPoints.Normalize();
 
     _forwardUnitVector = vectorBetweenPoints;
-    _rotation = Math::ToDegrees(Math::Atan2(vectorBetweenPoints.x, -vectorBetweenPoints.y));
+    _rotation = Math::Atan2(vectorBetweenPoints.x, -vectorBetweenPoints.y);
+}
+
+void Player::useSideMove(SIDEMOVE option)
+{
+    _sideMove = option;
 }
 
 void Player::updatePosition(float deltaTime)
 {
     if (!Math::NearZero(_speed))
     {
-        auto pos = Vector2(_position.x, _position.y);
-        pos += _forwardUnitVector * _speed * deltaTime;
-        _position = Point(pos.x, pos.y);
+        auto forwardVector = getForwardVector(_rotation);
+
+        if (_sideMove != SIDEMOVE::NONE)
+        {
+            auto sideMoveVector = getForwardVector(
+                _rotation + Math::ToRadians(static_cast<float>(_sideMove)));
+
+            forwardVector = (forwardVector + sideMoveVector) / 2;
+        }
+
+        _position += forwardVector * _speed * deltaTime;
     }
 
-    decreaseSpeed();
+    _speed = 0;
+    _sideMove = SIDEMOVE::NONE;
 }
 
 Point Player::position() const
@@ -42,5 +59,5 @@ Point Player::position() const
 
 float Player::rotation() const
 {
-    return _rotation;
+    return Math::ToDegrees(_rotation);
 }

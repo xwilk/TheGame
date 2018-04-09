@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
+#include "Point.hpp"
 
 const auto SCREEN_WIDTH = Width{640};
 const auto SCREEN_HEIGHT = Height{480};
@@ -65,14 +66,26 @@ void Game::handleInput(Player& player)
     }
 
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
-    if (currentKeyStates[SDL_SCANCODE_UP])
+    if (currentKeyStates[SDL_SCANCODE_W])
     {
         player.increaseSpeed();
     }
 
-    if (currentKeyStates[SDL_SCANCODE_DOWN])
+    if (currentKeyStates[SDL_SCANCODE_S])
     {
         player.decreaseSpeed();
+    }
+
+    if (currentKeyStates[SDL_SCANCODE_A])
+    {
+        player.useSideMove(SIDEMOVE::LEFT);
+        player.increaseSpeed();
+    }
+
+    if (currentKeyStates[SDL_SCANCODE_D])
+    {
+        player.useSideMove(SIDEMOVE::RIGHT);
+        player.increaseSpeed();
     }
 
     int mouse_x = 0, mouse_y = 0;
