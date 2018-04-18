@@ -241,6 +241,11 @@ public:
 		return v - 2.0f * Vector2::Dot(v, n) * n;
 	}
 
+	static Vector2 getForwardVector(float rotation)
+	{
+		return Vector2(Math::Sin(rotation), -Math::Cos(rotation));
+	}
+
 	// Transform vector by matrix
 	static Vector2 Transform(const Vector2& vec, const class Matrix3& mat, float w = 1.0f);
 

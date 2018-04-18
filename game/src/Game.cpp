@@ -3,6 +3,7 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
+#include "Zombie.hpp"
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Point.hpp"
@@ -12,6 +13,8 @@ const auto SCREEN_HEIGHT = Height{480};
 const int TILE_SIZE = 128;
 const auto SPRITE_WIDTH = Width{32};
 const auto SPRITE_HEIGHT = Height{32};
+const auto BULLET_WIDTH = Width{2};
+const auto BULLET_HEIGHT = Height{8};
 
 
 Game::Game()
@@ -23,13 +26,28 @@ Game::Game()
 void Game::run()
 {
     auto player = Player{};
+    auto zombie = Zombie{};
 
     auto image = Texture(
         getResourcePath("game") + "man.png",
         _renderer,
         SPRITE_WIDTH,
         SPRITE_HEIGHT,
-        Grid{Width{2}, Height{2}});
+        Grid{Width{1}, Height{1}});
+
+    auto zombieImage = Texture(
+        getResourcePath("game") + "zombie.png",
+        _renderer,
+        SPRITE_WIDTH,
+        SPRITE_HEIGHT,
+        Grid{Width{1}, Height{1}});
+
+    auto bulletImage = Texture(
+        getResourcePath("game") + "bullet.png",
+        _renderer,
+        BULLET_WIDTH,
+        BULLET_HEIGHT,
+        Grid{Width{1}, Height{1}});
 
     auto background = Texture(
         getResourcePath("game") + "tex.png",
@@ -43,12 +61,8 @@ void Game::run()
         _frame.start();
 
         handleInput(player);
-        player.updatePosition();
-
-        SDL_RenderClear(_renderer);
-        background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
-        image.render(_renderer, player.position(), player.rotation());
-        SDL_RenderPresent(_renderer);
+        update(player, zombie);
+        draw(background, image, zombieImage, bulletImage, player, zombie);
 
         _frame.delay();
     }
@@ -62,6 +76,11 @@ void Game::handleInput(Player& player)
         if (e.type == SDL_QUIT)
         {
             _isRunning = false;
+        }
+
+        if (e.type == SDL_MOUSEBUTTONDOWN)
+        {
+            _projectiles.emplace_back(player.position(), player.rotation());
         }
     }
 
@@ -91,4 +110,36 @@ void Game::handleInput(Player& player)
     int mouse_x = 0, mouse_y = 0;
     SDL_GetMouseState(&mouse_x, &mouse_y);
     player.rotateTowards(Point(mouse_x, mouse_y));
+}
+
+void Game::update(Player& player, Zombie& zombie)
+{
+    player.updatePosition();
+    zombie.updatePosition(player.position());
+
+    for (auto& projectile : _projectiles)
+    {
+        projectile.updatePosition();
+    }
+}
+
+void Game::draw(
+    Texture& background,
+    Texture& image,
+    Texture& zombieImage,
+    Texture& bulletImage,
+    Player& player,
+    Zombie& zombie)
+{
+    SDL_RenderClear(_renderer);
+    background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
+    image.render(_renderer, player.position(), player.rotation());
+    zombieImage.render(_renderer, zombie.position(), zombie.rotation());
+
+    for (auto& projectile : _projectiles)
+    {
+        bulletImage.render(_renderer, projectile.position(), projectile.rotation());
+    }
+
+    SDL_RenderPresent(_renderer);
 }
