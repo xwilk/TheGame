@@ -18,8 +18,14 @@ public:
     Point position() const;
     float rotation() const;
 
+    float collisionRadius() const
+    {
+        return _collisionRadius;
+    }
+
 private:
     Point _position;
     float _rotation;
     int _speed = 3;
+    float _collisionRadius = 2.f;
 };

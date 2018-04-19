@@ -17,5 +17,5 @@ Point Projectile::position() const
 
 float Projectile::rotation() const
 {
-    return _rotation;
+    return Math::ToDegrees(_rotation);
 }

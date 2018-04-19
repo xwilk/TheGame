@@ -17,6 +17,18 @@ const auto BULLET_WIDTH = Width{2};
 const auto BULLET_HEIGHT = Height{8};
 
 
+bool objectsCollide(
+    float aCollisionRadius,
+    Point aPosition,
+    float bCollisionRadius,
+    Point bPosition)
+{
+    auto distanceBetweenPosotions = (aPosition - bPosition).Length();
+    auto radiiSum = aCollisionRadius + bCollisionRadius;
+
+    return distanceBetweenPosotions < radiiSum;
+}
+
 Game::Game()
     : _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
       _renderer(_window)
@@ -117,10 +129,23 @@ void Game::update(Player& player, Zombie& zombie)
     player.updatePosition();
     zombie.updatePosition(player.position());
 
-    for (auto& projectile : _projectiles)
+    for (auto i = 0u; i < _projectiles.size(); ++i)
     {
+        auto& projectile = _projectiles[i];
         projectile.updatePosition();
+
+        if (objectsCollide(
+            projectile.collisionRadius(),
+            projectile.position(),
+            zombie.collisionRadius(),
+            zombie.position()))
+        {
+            _projectiles.erase(_projectiles.begin() + i);
+            zombie.takeDamage();
+        }
     }
+
+
 }
 
 void Game::draw(
