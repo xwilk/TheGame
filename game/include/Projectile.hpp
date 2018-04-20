@@ -26,6 +26,6 @@ public:
 private:
     Point _position;
     float _rotation;
-    int _speed = 3;
+    int _speed = 12;
     float _collisionRadius = 2.f;
 };

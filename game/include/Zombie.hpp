@@ -6,6 +6,10 @@
 class Zombie
 {
 public:
+    Zombie(Point position)
+        : _position(position)
+    {}
+
     void updatePosition(Point target, float deltaTime = 1.f);
 
     Point position() const;
@@ -18,11 +22,16 @@ public:
 
     void takeDamage()
     {
-        if (not --hitpoints)
+        if (not --_hitpoints)
         {
             _speed = 0;
             _collisionRadius = 0.f;
         }
+    }
+
+    bool isDead()
+    {
+        return _hitpoints < 1;
     }
 
 private:
@@ -32,5 +41,5 @@ private:
     float _rotation = 0.0;
     Point _position{500, 500};
     float _collisionRadius = 16.f;
-    int hitpoints{5};
+    int _hitpoints{5};
 };

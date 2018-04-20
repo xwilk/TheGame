@@ -7,9 +7,9 @@
 #include "Renderer.hpp"
 #include "Dimensions.hpp"
 #include "Projectile.hpp"
+#include "Zombie.hpp"
 
 class Player;
-class Zombie;
 class Texture;
 
 
@@ -22,8 +22,8 @@ public:
 
 private:
     void handleInput(Player&);
-    void update(Player&, Zombie&);
-    void draw(Texture&, Texture&, Texture&, Texture&, Player&, Zombie&);
+    void update(Player&);
+    void draw(Texture&, Texture&, Texture&, Texture&, Player&);
 
     Sdl _sdl;
     FrameRate _frame;
@@ -33,4 +33,5 @@ private:
     bool _isRunning = true;
 
     std::vector<Projectile> _projectiles;
+    std::vector<Zombie> _zombies;
 };

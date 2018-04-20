@@ -25,10 +25,21 @@ public:
     Point position() const;
     float rotation() const;
 
+    int currentScore() const
+    {
+        return _score;
+    }
+
+    void score()
+    {
+        ++_score;
+    }
+
 private:
     int _speed = 0;
     float _rotation = 0.0;
     Point _forwardUnitVector = {};
     Point _position{100, 100};
     SIDEMOVE _sideMove = SIDEMOVE::NONE;
+    int _score = 0;
 };

@@ -3,7 +3,6 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
-#include "Zombie.hpp"
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Point.hpp"
@@ -38,7 +37,7 @@ Game::Game()
 void Game::run()
 {
     auto player = Player{};
-    auto zombie = Zombie{};
+    _zombies.emplace_back(Point{500, 500});
 
     auto image = Texture(
         getResourcePath("game") + "man.png",
@@ -73,8 +72,8 @@ void Game::run()
         _frame.start();
 
         handleInput(player);
-        update(player, zombie);
-        draw(background, image, zombieImage, bulletImage, player, zombie);
+        update(player);
+        draw(background, image, zombieImage, bulletImage, player);
 
         _frame.delay();
     }
@@ -124,28 +123,47 @@ void Game::handleInput(Player& player)
     player.rotateTowards(Point(mouse_x, mouse_y));
 }
 
-void Game::update(Player& player, Zombie& zombie)
+void Game::update(Player& player)
 {
     player.updatePosition();
-    zombie.updatePosition(player.position());
+
+    auto playerPoint = player.currentScore();
+    if (playerPoint >_zombies.size())
+    {
+        _zombies.emplace_back(Point{playerPoint * 100.f, _zombies.size() * 100.f});
+    }
+
+    for (auto& zombie : _zombies)
+    {
+        zombie.updatePosition(player.position());
+    }
 
     for (auto i = 0u; i < _projectiles.size(); ++i)
     {
         auto& projectile = _projectiles[i];
         projectile.updatePosition();
 
-        if (objectsCollide(
-            projectile.collisionRadius(),
-            projectile.position(),
-            zombie.collisionRadius(),
-            zombie.position()))
+        for (auto j = 0u; j < _zombies.size(); ++j)
         {
-            _projectiles.erase(_projectiles.begin() + i);
-            zombie.takeDamage();
+            auto& zombie = _zombies[j];
+
+            if (objectsCollide(
+                projectile.collisionRadius(),
+                projectile.position(),
+                zombie.collisionRadius(),
+                zombie.position()))
+            {
+                _projectiles.erase(_projectiles.begin() + i);
+                zombie.takeDamage();
+
+                if (zombie.isDead())
+                {
+                    _zombies.erase(_zombies.begin() + j);
+                    player.score();
+                }
+            }
         }
     }
-
-
 }
 
 void Game::draw(
@@ -153,13 +171,16 @@ void Game::draw(
     Texture& image,
     Texture& zombieImage,
     Texture& bulletImage,
-    Player& player,
-    Zombie& zombie)
+    Player& player)
 {
     SDL_RenderClear(_renderer);
     background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
     image.render(_renderer, player.position(), player.rotation());
-    zombieImage.render(_renderer, zombie.position(), zombie.rotation());
+
+    for (auto& zombie : _zombies)
+    {
+        zombieImage.render(_renderer, zombie.position(), zombie.rotation());
+    }
 
     for (auto& projectile : _projectiles)
     {
