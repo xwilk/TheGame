@@ -37,6 +37,7 @@ public:
 
 private:
     int _speed = 0;
+    int _sideSpeed = 0;
     float _rotation = 0.0;
     Point _forwardUnitVector = {};
     Point _position{100, 100};

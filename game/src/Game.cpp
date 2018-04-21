@@ -109,13 +109,11 @@ void Game::handleInput(Player& player)
     if (currentKeyStates[SDL_SCANCODE_A])
     {
         player.useSideMove(SIDEMOVE::LEFT);
-        player.increaseSpeed();
     }
 
     if (currentKeyStates[SDL_SCANCODE_D])
     {
         player.useSideMove(SIDEMOVE::RIGHT);
-        player.increaseSpeed();
     }
 
     int mouse_x = 0, mouse_y = 0;
