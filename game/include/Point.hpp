@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math.hpp"
+#include "Vector.hpp"
 
 
 using Point = Vector2;
