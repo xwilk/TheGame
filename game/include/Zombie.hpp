@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Point.hpp"
+#include "Circle.hpp"
 
 
 class Zombie
@@ -14,11 +15,7 @@ public:
 
     Point position() const;
     float rotation() const;
-
-    float collisionRadius() const
-    {
-        return _collisionRadius;
-    }
+    Circle collisionArea() const;
 
     void takeDamage()
     {

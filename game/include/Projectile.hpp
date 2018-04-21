@@ -2,6 +2,7 @@
 
 #include "Math.hpp"
 #include "Point.hpp"
+#include "Circle.hpp"
 
 
 class Projectile
@@ -17,11 +18,7 @@ public:
 
     Point position() const;
     float rotation() const;
-
-    float collisionRadius() const
-    {
-        return _collisionRadius;
-    }
+    Circle collisionArea() const;
 
 private:
     Point _position;

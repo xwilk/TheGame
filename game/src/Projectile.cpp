@@ -19,3 +19,8 @@ float Projectile::rotation() const
 {
     return Math::ToDegrees(_rotation);
 }
+
+Circle Projectile::collisionArea() const
+{
+    return Circle{_collisionRadius, _position};
+}

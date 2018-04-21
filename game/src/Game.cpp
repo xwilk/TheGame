@@ -6,6 +6,7 @@
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Point.hpp"
+#include "Collisions.hpp"
 
 const auto SCREEN_WIDTH = Width{640};
 const auto SCREEN_HEIGHT = Height{480};
@@ -14,19 +15,6 @@ const auto SPRITE_WIDTH = Width{32};
 const auto SPRITE_HEIGHT = Height{32};
 const auto BULLET_WIDTH = Width{2};
 const auto BULLET_HEIGHT = Height{8};
-
-
-bool objectsCollide(
-    float aCollisionRadius,
-    Point aPosition,
-    float bCollisionRadius,
-    Point bPosition)
-{
-    auto distanceBetweenPositions = (aPosition - bPosition).Length();
-    auto radiiSum = aCollisionRadius + bCollisionRadius;
-
-    return distanceBetweenPositions < radiiSum;
-}
 
 Game::Game()
     : _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
@@ -139,11 +127,7 @@ void Game::update(Player& player)
         {
             auto& zombie = _zombies[j];
 
-            if (objectsCollide(
-                projectile.collisionRadius(),
-                projectile.position(),
-                zombie.collisionRadius(),
-                zombie.position()))
+            if (objectsCollide(projectile, zombie))
             {
                 _projectiles.erase(_projectiles.begin() + i);
                 zombie.takeDamage();

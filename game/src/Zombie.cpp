@@ -30,3 +30,8 @@ float Zombie::rotation() const
 {
     return Math::ToDegrees(_rotation);
 }
+
+Circle Zombie::collisionArea() const
+{
+    return Circle{_collisionRadius, _position};
+}
