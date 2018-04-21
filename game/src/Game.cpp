@@ -22,10 +22,10 @@ bool objectsCollide(
     float bCollisionRadius,
     Point bPosition)
 {
-    auto distanceBetweenPosotions = (aPosition - bPosition).Length();
+    auto distanceBetweenPositions = (aPosition - bPosition).Length();
     auto radiiSum = aCollisionRadius + bCollisionRadius;
 
-    return distanceBetweenPosotions < radiiSum;
+    return distanceBetweenPositions < radiiSum;
 }
 
 Game::Game()
@@ -127,12 +127,6 @@ void Game::update(Player& player)
 {
     player.updatePosition();
 
-    auto playerPoint = player.currentScore();
-    if (playerPoint >_zombies.size())
-    {
-        _zombies.emplace_back(Point{playerPoint * 100.f, _zombies.size() * 100.f});
-    }
-
     for (auto& zombie : _zombies)
     {
         zombie.updatePosition(player.position());
@@ -161,8 +155,22 @@ void Game::update(Player& player)
                     _zombies.erase(_zombies.begin() + j);
                     player.score();
                 }
+
+                break;
             }
         }
+    }
+
+    spawnEnemies(player.currentScore());
+}
+
+void Game::spawnEnemies(unsigned playerScore)
+{
+    if (playerScore > _zombies.size())
+    {
+        auto x = playerScore % 2 == 0 ? 100.f : 540.f;
+        auto y = _zombies.size() % 2 == 0 ? 100.f : 380.f;
+        _zombies.emplace_back(Point{x, y});
     }
 }
 

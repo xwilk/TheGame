@@ -25,7 +25,7 @@ public:
     Point position() const;
     float rotation() const;
 
-    int currentScore() const
+    unsigned currentScore() const
     {
         return _score;
     }
@@ -41,5 +41,5 @@ private:
     Point _forwardUnitVector = {};
     Point _position{100, 100};
     SIDEMOVE _sideMove = SIDEMOVE::NONE;
-    int _score = 0;
+    unsigned _score = 0;
 };

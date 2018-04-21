@@ -25,6 +25,8 @@ private:
     void update(Player&);
     void draw(Texture&, Texture&, Texture&, Texture&, Player&);
 
+    void spawnEnemies(unsigned playerScore);
+
     Sdl _sdl;
     FrameRate _frame;
     Window _window;
