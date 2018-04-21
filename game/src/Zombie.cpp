@@ -35,3 +35,13 @@ Circle Zombie::collisionArea() const
 {
     return Circle{_collisionRadius, _position};
 }
+
+void Zombie::takeDamage()
+{
+    --_hitpoints;
+}
+
+bool Zombie::isDead()
+{
+    return _hitpoints < 1;
+}

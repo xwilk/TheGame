@@ -17,26 +17,16 @@ public:
     float rotation() const;
     Circle collisionArea() const;
 
-    void takeDamage()
-    {
-        if (not --_hitpoints)
-        {
-            _speed = 0;
-            _collisionRadius = 0.f;
-        }
-    }
-
-    bool isDead()
-    {
-        return _hitpoints < 1;
-    }
+    void takeDamage();
+    bool isDead();
 
 private:
     void rotateTowards(Point target);
 
-    int _speed = 1;
+    float _speed = 0.5f;
     float _rotation = 0.0;
-    Point _position{500, 500};
     float _collisionRadius = 16.f;
     int _hitpoints{5};
+
+    Point _position;
 };
