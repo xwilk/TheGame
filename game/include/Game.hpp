@@ -8,6 +8,7 @@
 #include "Dimensions.hpp"
 #include "Projectile.hpp"
 #include "Zombie.hpp"
+#include "Wall.hpp"
 
 class Player;
 class Texture;
@@ -23,7 +24,7 @@ public:
 private:
     void handleInput(Player&);
     void update(Player&);
-    void draw(Texture&, Texture&, Texture&, Texture&, Player&);
+    void draw(Texture&, Texture&, Texture&, Texture&, Texture&, Player&);
 
     void spawnEnemies(unsigned playerScore);
 
@@ -36,4 +37,5 @@ private:
 
     std::vector<Projectile> _projectiles;
     std::vector<Zombie> _zombies;
+    std::vector<Wall> _walls;
 };

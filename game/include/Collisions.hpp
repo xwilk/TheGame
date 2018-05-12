@@ -1,18 +1,15 @@
 #pragma once
 
 #include "Circle.hpp"
+#include "Rectangle.hpp"
 
 
 template <typename A, typename B>
 bool objectsCollide(const A& a, const B& b)
 {
-    return collide(a.collisionArea(), b.collisionArea());
+    return intersect(a.collisionArea(), b.collisionArea());
 }
 
-inline bool collide(Circle a, Circle b)
-{
-    auto distanceBetweenCenters = (a.center - b.center).Length();
-    auto radiiSum = a.radius + b.radius;
-
-    return distanceBetweenCenters < radiiSum;
-}
+bool intersect(const Circle& a, const Circle& b);
+bool intersect(const Circle& circle, const Rectangle& rect);
+bool intersect(const Rectangle& rect, const Circle& circle);

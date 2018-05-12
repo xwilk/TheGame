@@ -16,16 +16,28 @@ const auto SPRITE_HEIGHT = Height{32};
 const auto BULLET_WIDTH = Width{2};
 const auto BULLET_HEIGHT = Height{8};
 
+
 Game::Game()
     : _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
       _renderer(_window)
 {
 }
 
+void makeWalls(std::vector<Wall>& walls, Width screenWidth)
+{
+    int x = 16, y = 16;
+    while (x < screenWidth)
+    {
+        walls.emplace_back(Point{float(x), float(y)});
+        x += 32;
+    }
+}
+
 void Game::run()
 {
     auto player = Player{};
     _zombies.emplace_back(Point{500, 500});
+    makeWalls(_walls, SCREEN_WIDTH);
 
     auto image = Texture(
         getResourcePath("game") + "man.png",
@@ -48,6 +60,13 @@ void Game::run()
         BULLET_HEIGHT,
         Grid{Width{1}, Height{1}});
 
+    auto wallImage = Texture(
+        getResourcePath("game") + "wall.png",
+        _renderer,
+        SPRITE_WIDTH,
+        SPRITE_HEIGHT,
+        Grid{Width{1}, Height{1}});
+
     auto background = Texture(
         getResourcePath("game") + "tex.png",
         _renderer,
@@ -61,7 +80,7 @@ void Game::run()
 
         handleInput(player);
         update(player);
-        draw(background, image, zombieImage, bulletImage, player);
+        draw(background, image, zombieImage, bulletImage, wallImage, player);
 
         _frame.delay();
     }
@@ -161,10 +180,17 @@ void Game::draw(
     Texture& image,
     Texture& zombieImage,
     Texture& bulletImage,
+    Texture& wallImage,
     Player& player)
 {
     SDL_RenderClear(_renderer);
     background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
+
+    for (auto& wall : _walls)
+    {
+        wallImage.render(_renderer, wall.position(), wall.rotation());
+    }
+
     image.render(_renderer, player.position(), player.rotation());
 
     for (auto& zombie : _zombies)
