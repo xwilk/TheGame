@@ -26,7 +26,7 @@ Game::Game()
 void makeWalls(std::vector<Wall>& walls, Width screenWidth)
 {
     int x = 16, y = 16;
-    while (x < screenWidth)
+    while (x < screenWidth.get())
     {
         walls.emplace_back(Point{float(x), float(y)});
         x += 32;

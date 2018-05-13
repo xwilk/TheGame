@@ -7,7 +7,7 @@
 struct Rectangle
 {
     explicit Rectangle(Point center, Width width, Height height)
-        : topLeft(Point{center.x - (width / 2), center.y - (height / 2)}),
+        : topLeft(Point{center.x - (width.get() / 2), center.y - (height.get() / 2)}),
           w(width),
           h(height)
     {

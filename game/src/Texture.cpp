@@ -15,13 +15,13 @@ Texture::Texture(
     if (_texture == nullptr)
         throw TextureLoadingError("CreateTextureFromSurface");
 
-    for (int i = 0; i < grid.xSize * grid.ySize; ++i)
+    for (int i = 0; i < grid.size(); ++i)
     {
         _clips.emplace_back(SDL_Rect{
-            i % grid.xSize * spriteWidth,
-            i / grid.ySize * spriteHeight,
-            spriteWidth,
-            spriteHeight
+            i % grid.w.get() * spriteWidth.get(),
+            i / grid.h.get() * spriteHeight.get(),
+            spriteWidth.get(),
+            spriteHeight.get()
         });
     }
 }
@@ -67,9 +67,9 @@ void Texture::tile(
     int tileSize)
 {
     int x = 0, y = 0;
-    while (x < screenWidth)
+    while (x < screenWidth.get())
     {
-        while (y < screenHeight)
+        while (y < screenHeight.get())
         {
             SDL_Rect dst = {x, y, tileSize, tileSize};
             renderTexture(_texture, renderer, &dst);
