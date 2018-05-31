@@ -5,6 +5,7 @@
 #include "Wall.hpp"
 #include "Projectile.hpp"
 #include "Consts.hpp"
+#include "GameObjects.hpp"
 
 
 SDLDisplay::SDLDisplay()
@@ -53,11 +54,7 @@ void SDLDisplay::clear()
     SDL_RenderClear(_renderer);
 }
 
-void SDLDisplay::apply(
-    Player& player,
-    std::vector<Zombie>& zombies,
-    std::vector<Wall>& walls,
-    std::vector<Projectile>& projectiles)
+void SDLDisplay::apply(GameObjects& gameObjects)
 {
     _textures[GameObjectId::BACKGROUND]->tile(
         _renderer,
@@ -67,10 +64,10 @@ void SDLDisplay::apply(
 
     _textures[GameObjectId::PLAYER]->render(
         _renderer,
-        player.position(),
-        player.rotation());
+        gameObjects.player.position(),
+        gameObjects.player.rotation());
 
-    for (auto& zombie : zombies)
+    for (auto& zombie : gameObjects.zombies)
     {
         _textures[GameObjectId::ZOMBIE]->render(
             _renderer,
@@ -78,7 +75,7 @@ void SDLDisplay::apply(
             zombie.rotation());
     }
 
-    for (auto& wall : walls)
+    for (auto& wall : gameObjects.walls)
     {
         _textures[GameObjectId::WALL]->render(
             _renderer,
@@ -86,7 +83,7 @@ void SDLDisplay::apply(
             wall.rotation());
     }
 
-    for (auto& projectile : projectiles)
+    for (auto& projectile : gameObjects.projectiles)
     {
         _textures[GameObjectId::BULLET]->render(
             _renderer,

@@ -3,11 +3,8 @@
 #include <vector>
 #include "FrameRate.hpp"
 #include "SDLDisplay.hpp"
-#include "Projectile.hpp"
-#include "Zombie.hpp"
-#include "Wall.hpp"
+#include "GameObjects.hpp"
 
-class Player;
 
 class Game
 {
@@ -17,18 +14,13 @@ public:
     void run();
 
 private:
-    void handleInput(Player&);
-    void update(Player&);
-    void draw(Player&);
-
-    void spawnEnemies(unsigned playerScore);
+    void handleInput();
+    void update();
+    void draw();
 
     FrameRate _frame;
     SDLDisplay _display;
+    GameObjects _gameObjects;
 
     bool _isRunning = true;
-
-    std::vector<Projectile> _projectiles;
-    std::vector<Zombie> _zombies;
-    std::vector<Wall> _walls;
 };

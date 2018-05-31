@@ -15,6 +15,7 @@ class Player;
 class Zombie;
 class Wall;
 class Projectile;
+struct GameObjects;
 
 enum class GameObjectId
 {
@@ -31,13 +32,7 @@ public:
     SDLDisplay();
 
     void clear();
-
-    void apply(
-        Player&,
-        std::vector<Zombie>&,
-        std::vector<Wall>&,
-        std::vector<Projectile>&);
-
+    void apply(GameObjects&);
     void renderPresent();
 
 private:

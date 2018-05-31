@@ -8,39 +8,26 @@
 #include "Consts.hpp"
 
 
-Game::Game() : _display()
+Game::Game()
+    : _display()
 {
-}
-
-void makeWalls(std::vector<Wall>& walls, Width screenWidth)
-{
-    int x = 16, y = 16;
-    while (x < screenWidth.get())
-    {
-        walls.emplace_back(Point{float(x), float(y)});
-        x += 32;
-    }
 }
 
 void Game::run()
 {
-    auto player = Player{};
-    _zombies.emplace_back(Point{500, 500});
-    makeWalls(_walls, SCREEN_WIDTH);
-
     while (_isRunning)
     {
         _frame.start();
 
-        handleInput(player);
-        update(player);
-        draw(player);
+        handleInput();
+        update();
+        draw();
 
         _frame.delay();
     }
 }
 
-void Game::handleInput(Player& player)
+void Game::handleInput()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e))
@@ -52,63 +39,65 @@ void Game::handleInput(Player& player)
 
         if (e.type == SDL_MOUSEBUTTONDOWN)
         {
-            _projectiles.emplace_back(player.position(), player.rotation());
+            _gameObjects.projectiles.emplace_back(
+                _gameObjects.player.position(),
+                _gameObjects.player.rotation());
         }
     }
 
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if (currentKeyStates[SDL_SCANCODE_W])
     {
-        player.increaseSpeed();
+        _gameObjects.player.increaseSpeed();
     }
 
     if (currentKeyStates[SDL_SCANCODE_S])
     {
-        player.decreaseSpeed();
+        _gameObjects.player.decreaseSpeed();
     }
 
     if (currentKeyStates[SDL_SCANCODE_A])
     {
-        player.useSideMove(SIDEMOVE::LEFT);
+        _gameObjects.player.useSideMove(SIDEMOVE::LEFT);
     }
 
     if (currentKeyStates[SDL_SCANCODE_D])
     {
-        player.useSideMove(SIDEMOVE::RIGHT);
+        _gameObjects.player.useSideMove(SIDEMOVE::RIGHT);
     }
 
     int mouse_x = 0, mouse_y = 0;
     SDL_GetMouseState(&mouse_x, &mouse_y);
-    player.rotateTowards(Point(mouse_x, mouse_y));
+    _gameObjects.player.rotateTowards(Point(mouse_x, mouse_y));
 }
 
-void Game::update(Player& player)
+void Game::update()
 {
-    player.updatePosition();
+    _gameObjects.player.updatePosition();
 
-    for (auto& zombie : _zombies)
+    for (auto& zombie : _gameObjects.zombies)
     {
-        zombie.updatePosition(player.position());
+        zombie.updatePosition(_gameObjects.player.position());
     }
 
-    for (auto i = 0u; i < _projectiles.size(); ++i)
+    for (auto i = 0u; i < _gameObjects.projectiles.size(); ++i)
     {
-        auto& projectile = _projectiles[i];
+        auto& projectile = _gameObjects.projectiles[i];
         projectile.updatePosition();
 
-        for (auto j = 0u; j < _zombies.size(); ++j)
+        for (auto j = 0u; j < _gameObjects.zombies.size(); ++j)
         {
-            auto& zombie = _zombies[j];
+            auto& zombie = _gameObjects.zombies[j];
 
             if (objectsCollide(projectile, zombie))
             {
-                _projectiles.erase(_projectiles.begin() + i);
+                _gameObjects.projectiles.erase(_gameObjects.projectiles.begin() + i);
                 zombie.takeDamage();
 
                 if (zombie.isDead())
                 {
-                    _zombies.erase(_zombies.begin() + j);
-                    player.score();
+                    _gameObjects.zombies.erase(_gameObjects.zombies.begin() + j);
+                    _gameObjects.player.score();
                 }
 
                 break;
@@ -116,22 +105,12 @@ void Game::update(Player& player)
         }
     }
 
-    spawnEnemies(player.currentScore());
+    _gameObjects.spawnEnemies();
 }
 
-void Game::spawnEnemies(unsigned playerScore)
-{
-    if (playerScore > _zombies.size())
-    {
-        auto x = playerScore % 2 == 0 ? 100.f : 540.f;
-        auto y = _zombies.size() % 2 == 0 ? 100.f : 380.f;
-        _zombies.emplace_back(Point{x, y});
-    }
-}
-
-void Game::draw(Player& player)
+void Game::draw()
 {
     _display.clear();
-    _display.apply(player, _zombies, _walls, _projectiles);
+    _display.apply(_gameObjects); // I want to pass 'DrawableObjects here'
     _display.renderPresent();
 }
