@@ -2,10 +2,6 @@
 #include <SDL.h>
 
 #include "Game.hpp"
-#include "Player.hpp"
-#include "Point.hpp"
-#include "Collisions.hpp"
-#include "Consts.hpp"
 
 
 Game::Game()
@@ -73,39 +69,7 @@ void Game::handleInput()
 
 void Game::update()
 {
-    _gameObjects.player.updatePosition();
-
-    for (auto& zombie : _gameObjects.zombies)
-    {
-        zombie.updatePosition(_gameObjects.player.position());
-    }
-
-    for (auto i = 0u; i < _gameObjects.projectiles.size(); ++i)
-    {
-        auto& projectile = _gameObjects.projectiles[i];
-        projectile.updatePosition();
-
-        for (auto j = 0u; j < _gameObjects.zombies.size(); ++j)
-        {
-            auto& zombie = _gameObjects.zombies[j];
-
-            if (objectsCollide(projectile, zombie))
-            {
-                _gameObjects.projectiles.erase(_gameObjects.projectiles.begin() + i);
-                zombie.takeDamage();
-
-                if (zombie.isDead())
-                {
-                    _gameObjects.zombies.erase(_gameObjects.zombies.begin() + j);
-                    _gameObjects.player.score();
-                }
-
-                break;
-            }
-        }
-    }
-
-    _gameObjects.spawnEnemies();
+    _gameObjects.update();
 }
 
 void Game::draw()
