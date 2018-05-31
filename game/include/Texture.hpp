@@ -24,7 +24,7 @@ class Texture
 public:
     explicit Texture(
         const std::string& filePath,
-        Renderer&,
+        SDL_Renderer* renderer,
         Width spriteWidth,
         Height spriteHeight,
         Grid);

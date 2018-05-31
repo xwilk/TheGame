@@ -9,6 +9,7 @@ add_library(libgame STATIC
     src/Game.cpp
     src/Player.cpp
     src/Projectile.cpp
+    src/Renderer.cpp
     src/Texture.cpp
     src/Zombie.cpp)
 

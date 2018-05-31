@@ -39,48 +39,13 @@ void Game::run()
     _zombies.emplace_back(Point{500, 500});
     makeWalls(_walls, SCREEN_WIDTH);
 
-    auto image = Texture(
-        getResourcePath("game") + "man.png",
-        _renderer,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT,
-        Grid{Width{1}, Height{1}});
-
-    auto zombieImage = Texture(
-        getResourcePath("game") + "zombie.png",
-        _renderer,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT,
-        Grid{Width{1}, Height{1}});
-
-    auto bulletImage = Texture(
-        getResourcePath("game") + "bullet.png",
-        _renderer,
-        BULLET_WIDTH,
-        BULLET_HEIGHT,
-        Grid{Width{1}, Height{1}});
-
-    auto wallImage = Texture(
-        getResourcePath("game") + "wall.png",
-        _renderer,
-        SPRITE_WIDTH,
-        SPRITE_HEIGHT,
-        Grid{Width{1}, Height{1}});
-
-    auto background = Texture(
-        getResourcePath("game") + "tex.png",
-        _renderer,
-        Width{TILE_SIZE},
-        Height{TILE_SIZE},
-        Grid{Width{1}, Height{1}});
-
     while (_isRunning)
     {
         _frame.start();
 
         handleInput(player);
         update(player);
-        draw(background, image, zombieImage, bulletImage, wallImage, player);
+        draw(player);
 
         _frame.delay();
     }
@@ -175,33 +140,9 @@ void Game::spawnEnemies(unsigned playerScore)
     }
 }
 
-void Game::draw(
-    Texture& background,
-    Texture& image,
-    Texture& zombieImage,
-    Texture& bulletImage,
-    Texture& wallImage,
-    Player& player)
+void Game::draw(Player& player)
 {
     SDL_RenderClear(_renderer);
-    background.tile(_renderer, SCREEN_WIDTH, SCREEN_HEIGHT, TILE_SIZE);
-
-    for (auto& wall : _walls)
-    {
-        wallImage.render(_renderer, wall.position(), wall.rotation());
-    }
-
-    image.render(_renderer, player.position(), player.rotation());
-
-    for (auto& zombie : _zombies)
-    {
-        zombieImage.render(_renderer, zombie.position(), zombie.rotation());
-    }
-
-    for (auto& projectile : _projectiles)
-    {
-        bulletImage.render(_renderer, projectile.position(), projectile.rotation());
-    }
-
+    _renderer.apply(player, _zombies, _walls, _projectiles);
     SDL_RenderPresent(_renderer);
 }

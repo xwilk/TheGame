@@ -5,7 +5,7 @@
 
 Texture::Texture(
     const std::string& filePath,
-    Renderer& renderer,
+    SDL_Renderer* renderer,
     Width spriteWidth,
     Height spriteHeight,
     Grid grid)

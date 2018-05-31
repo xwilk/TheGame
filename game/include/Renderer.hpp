@@ -1,9 +1,26 @@
 #pragma once
 
+#include <map>
+#include <vector>
+#include <memory>
 #include <stdexcept>
 #include <SDL.h>
 
-#include "Window.hpp"
+class Texture;
+class Window;
+class Player;
+class Zombie;
+class Wall;
+class Projectile;
+
+enum class GameObjectId
+{
+    BACKGROUND,
+    PLAYER,
+    ZOMBIE,
+    BULLET,
+    WALL
+};
 
 class RendererError : public std::runtime_error
 {
@@ -13,22 +30,17 @@ public:
     {}
 };
 
-
 class Renderer
 {
 public:
-    Renderer(Window& window)
-    {
-        _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    Renderer(Window&);
+    ~Renderer();
 
-        if (not _renderer)
-            throw RendererError("CreateRenderer");
-    }
-
-    ~Renderer()
-    {
-        SDL_DestroyRenderer(_renderer);
-    }
+    void apply(
+        Player&,
+        std::vector<Zombie>&,
+        std::vector<Wall>&,
+        std::vector<Projectile>&);
 
     operator SDL_Renderer*()
     {
@@ -37,4 +49,5 @@ public:
 
 private:
     SDL_Renderer* _renderer;
+    std::map<GameObjectId, std::unique_ptr<Texture>> _textures;
 };

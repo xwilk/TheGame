@@ -24,7 +24,7 @@ public:
 private:
     void handleInput(Player&);
     void update(Player&);
-    void draw(Texture&, Texture&, Texture&, Texture&, Texture&, Player&);
+    void draw(Player&);
 
     void spawnEnemies(unsigned playerScore);
 
