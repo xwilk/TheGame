@@ -1,5 +1,4 @@
 #include "SDLDisplay.hpp"
-#include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Player.hpp"
 #include "Zombie.hpp"

@@ -3,13 +3,11 @@
 #include <vector>
 #include "FrameRate.hpp"
 #include "SDLDisplay.hpp"
-#include "Dimensions.hpp"
 #include "Projectile.hpp"
 #include "Zombie.hpp"
 #include "Wall.hpp"
 
 class Player;
-
 
 class Game
 {

@@ -9,8 +9,8 @@
 #include "Sdl.hpp"
 #include "Window.hpp"
 #include "Renderer.hpp"
+#include "Texture.hpp"
 
-class Texture;
 class Player;
 class Zombie;
 class Wall;
@@ -29,7 +29,6 @@ class SDLDisplay
 {
 public:
     SDLDisplay();
-    ~SDLDisplay();
 
     void clear();
 
