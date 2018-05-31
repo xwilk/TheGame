@@ -1,4 +1,4 @@
-#include "Renderer.hpp"
+#include "SDLDisplay.hpp"
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Player.hpp"
@@ -8,14 +8,14 @@
 #include "Consts.hpp"
 
 
-Renderer::Renderer()
+SDLDisplay::SDLDisplay()
     : _sdl(),
       _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT})
 {
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (not _renderer)
-        throw RendererError("CreateRenderer");
+        throw SDLDisplayError("CreateRenderer");
 
     _textures[GameObjectId::PLAYER] = std::make_unique<Texture>(
         getResourcePath("game") + "man.png",
@@ -53,32 +53,37 @@ Renderer::Renderer()
         Grid{Width{1}, Height{1}});
 }
 
-Renderer::~Renderer()
+SDLDisplay::~SDLDisplay()
 {
     SDL_DestroyRenderer(_renderer);
 }
 
-void Renderer::apply(
+void SDLDisplay::clear()
+{
+    SDL_RenderClear(_renderer);
+}
+
+void SDLDisplay::apply(
     Player& player,
     std::vector<Zombie>& zombies,
     std::vector<Wall>& walls,
     std::vector<Projectile>& projectiles)
 {
     _textures[GameObjectId::BACKGROUND]->tile(
-        *this,
+        _renderer,
         SCREEN_WIDTH,
         SCREEN_HEIGHT,
         TILE_SIZE);
 
     _textures[GameObjectId::PLAYER]->render(
-        *this,
+        _renderer,
         player.position(),
         player.rotation());
 
     for (auto& zombie : zombies)
     {
         _textures[GameObjectId::ZOMBIE]->render(
-            *this,
+            _renderer,
             zombie.position(),
             zombie.rotation());
     }
@@ -86,7 +91,7 @@ void Renderer::apply(
     for (auto& wall : walls)
     {
         _textures[GameObjectId::WALL]->render(
-            *this,
+            _renderer,
             wall.position(),
             wall.rotation());
     }
@@ -94,8 +99,13 @@ void Renderer::apply(
     for (auto& projectile : projectiles)
     {
         _textures[GameObjectId::BULLET]->render(
-            *this,
+            _renderer,
             projectile.position(),
             projectile.rotation());
     }
+}
+
+void SDLDisplay::renderPresent()
+{
+    SDL_RenderPresent(_renderer);
 }

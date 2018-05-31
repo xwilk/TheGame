@@ -8,8 +8,7 @@
 #include "Consts.hpp"
 
 
-Game::Game()
-    : _renderer()
+Game::Game() : _display()
 {
 }
 
@@ -132,7 +131,7 @@ void Game::spawnEnemies(unsigned playerScore)
 
 void Game::draw(Player& player)
 {
-    SDL_RenderClear(_renderer);
-    _renderer.apply(player, _zombies, _walls, _projectiles);
-    SDL_RenderPresent(_renderer);
+    _display.clear();
+    _display.apply(player, _zombies, _walls, _projectiles);
+    _display.renderPresent();
 }

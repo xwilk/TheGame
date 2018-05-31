@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "FrameRate.hpp"
-#include "Renderer.hpp"
+#include "SDLDisplay.hpp"
 #include "Dimensions.hpp"
 #include "Projectile.hpp"
 #include "Zombie.hpp"
@@ -26,7 +26,7 @@ private:
     void spawnEnemies(unsigned playerScore);
 
     FrameRate _frame;
-    Renderer _renderer;
+    SDLDisplay _display;
 
     bool _isRunning = true;
 

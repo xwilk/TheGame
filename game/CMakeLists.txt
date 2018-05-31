@@ -5,11 +5,10 @@ include_directories(include)
 add_library(libgame STATIC
     src/Collisions.cpp
     src/FrameRate.cpp
-    include/Game.hpp
     src/Game.cpp
     src/Player.cpp
     src/Projectile.cpp
-    src/Renderer.cpp
+    src/SDLDisplay.cpp
     src/Texture.cpp
     src/Zombie.cpp)
 

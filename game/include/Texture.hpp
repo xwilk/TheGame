@@ -6,7 +6,6 @@
 #include <SDL.h>
 
 #include "Dimensions.hpp"
-#include "Renderer.hpp"
 #include "Point.hpp"
 
 
@@ -18,7 +17,6 @@ public:
     {}
 };
 
-
 class Texture
 {
 public:
@@ -29,16 +27,15 @@ public:
         Height spriteHeight,
         Grid);
 
-
     ~Texture();
 
     void render(
-        Renderer&,
+        SDL_Renderer*,
         Point position,
         double rotation = 0.0);
 
     void tile(
-        Renderer&,
+        SDL_Renderer*,
         Width screenWidth,
         Height screenHeight,
         int tileSize);

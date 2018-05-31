@@ -24,19 +24,21 @@ enum class GameObjectId
     WALL
 };
 
-class RendererError : public std::runtime_error
+class SDLDisplayError : public std::runtime_error
 {
 public:
-    RendererError(const std::string& what_arg)
+    SDLDisplayError(const std::string& what_arg)
         : std::runtime_error(what_arg)
     {}
 };
 
-class Renderer
+class SDLDisplay
 {
 public:
-    Renderer();
-    ~Renderer();
+    SDLDisplay();
+    ~SDLDisplay();
+
+    void clear();
 
     void apply(
         Player&,
@@ -44,10 +46,7 @@ public:
         std::vector<Wall>&,
         std::vector<Projectile>&);
 
-    operator SDL_Renderer*()
-    {
-        return _renderer;
-    }
+    void renderPresent();
 
 private:
     Sdl _sdl;

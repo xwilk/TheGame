@@ -36,7 +36,7 @@ namespace
 
 void renderTexture(
     SDL_Texture* texture,
-    Renderer& renderer,
+    SDL_Renderer* renderer,
     SDL_Rect* dst,
     SDL_Rect* clip = nullptr,
     double rotation = 0.0)
@@ -47,7 +47,7 @@ void renderTexture(
 }
 
 void Texture::render(
-    Renderer& renderer,
+    SDL_Renderer* renderer,
     Point position,
     double rotation)
 {
@@ -61,7 +61,7 @@ void Texture::render(
 }
 
 void Texture::tile(
-    Renderer& renderer,
+    SDL_Renderer* renderer,
     Width screenWidth,
     Height screenHeight,
     int tileSize)
