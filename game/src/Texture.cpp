@@ -1,11 +1,12 @@
 #include <SDL_image.h>
 
 #include "Texture.hpp"
+#include "Renderer.hpp"
 
 
 Texture::Texture(
     const std::string& filePath,
-    SDL_Renderer* renderer,
+    Renderer& renderer,
     Width spriteWidth,
     Height spriteHeight,
     Grid grid)
@@ -36,7 +37,7 @@ namespace
 
 void renderTexture(
     SDL_Texture* texture,
-    SDL_Renderer* renderer,
+    Renderer& renderer,
     SDL_Rect* dst,
     SDL_Rect* clip = nullptr,
     double rotation = 0.0)
@@ -47,7 +48,7 @@ void renderTexture(
 }
 
 void Texture::render(
-    SDL_Renderer* renderer,
+    Renderer& renderer,
     Point position,
     double rotation)
 {
@@ -61,7 +62,7 @@ void Texture::render(
 }
 
 void Texture::tile(
-    SDL_Renderer* renderer,
+    Renderer& renderer,
     Width screenWidth,
     Height screenHeight,
     int tileSize)

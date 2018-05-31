@@ -8,6 +8,7 @@
 
 #include "Sdl.hpp"
 #include "Window.hpp"
+#include "Renderer.hpp"
 
 class Texture;
 class Player;
@@ -22,14 +23,6 @@ enum class GameObjectId
     ZOMBIE,
     BULLET,
     WALL
-};
-
-class SDLDisplayError : public std::runtime_error
-{
-public:
-    SDLDisplayError(const std::string& what_arg)
-        : std::runtime_error(what_arg)
-    {}
 };
 
 class SDLDisplay
@@ -51,6 +44,6 @@ public:
 private:
     Sdl _sdl;
     Window _window;
-    SDL_Renderer* _renderer;
+    Renderer _renderer;
     std::map<GameObjectId, std::unique_ptr<Texture>> _textures;
 };

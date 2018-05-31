@@ -8,6 +8,7 @@
 #include "Dimensions.hpp"
 #include "Point.hpp"
 
+class Renderer;
 
 class TextureLoadingError : public std::runtime_error
 {
@@ -22,7 +23,7 @@ class Texture
 public:
     explicit Texture(
         const std::string& filePath,
-        SDL_Renderer* renderer,
+        Renderer& renderer,
         Width spriteWidth,
         Height spriteHeight,
         Grid);
@@ -30,12 +31,12 @@ public:
     ~Texture();
 
     void render(
-        SDL_Renderer*,
+        Renderer&,
         Point position,
         double rotation = 0.0);
 
     void tile(
-        SDL_Renderer*,
+        Renderer&,
         Width screenWidth,
         Height screenHeight,
         int tileSize);

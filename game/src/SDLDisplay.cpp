@@ -10,13 +10,9 @@
 
 SDLDisplay::SDLDisplay()
     : _sdl(),
-      _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT})
+      _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
+      _renderer(_window)
 {
-    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-    if (not _renderer)
-        throw SDLDisplayError("CreateRenderer");
-
     _textures[GameObjectId::PLAYER] = std::make_unique<Texture>(
         getResourcePath("game") + "man.png",
         _renderer,
@@ -51,11 +47,6 @@ SDLDisplay::SDLDisplay()
         Width{TILE_SIZE},
         Height{TILE_SIZE},
         Grid{Width{1}, Height{1}});
-}
-
-SDLDisplay::~SDLDisplay()
-{
-    SDL_DestroyRenderer(_renderer);
 }
 
 void SDLDisplay::clear()
