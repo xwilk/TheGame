@@ -6,8 +6,10 @@
 #include <stdexcept>
 #include <SDL.h>
 
+#include "Sdl.hpp"
+#include "Window.hpp"
+
 class Texture;
-class Window;
 class Player;
 class Zombie;
 class Wall;
@@ -33,7 +35,7 @@ public:
 class Renderer
 {
 public:
-    Renderer(Window&);
+    Renderer();
     ~Renderer();
 
     void apply(
@@ -48,6 +50,8 @@ public:
     }
 
 private:
+    Sdl _sdl;
+    Window _window;
     SDL_Renderer* _renderer;
     std::map<GameObjectId, std::unique_ptr<Texture>> _textures;
 };

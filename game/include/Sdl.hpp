@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdexcept>
 
 #include <SDL.h>
@@ -7,9 +9,9 @@
 class SdlError : public std::runtime_error
 {
 public:
-    SdlError(const std::string& what_arg) 
+    SdlError(const std::string& what_arg)
         : runtime_error(what_arg)
-    {} 
+    {}
 };
 
 

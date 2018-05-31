@@ -1,24 +1,18 @@
 #include "Renderer.hpp"
-#include "Window.hpp"
 #include "Texture.hpp"
 #include "ResourcePath.hpp"
 #include "Player.hpp"
 #include "Zombie.hpp"
 #include "Wall.hpp"
 #include "Projectile.hpp"
-
-const auto SCREEN_WIDTH = Width{640};
-const auto SCREEN_HEIGHT = Height{480};
-const auto SPRITE_WIDTH = Width{32};
-const auto SPRITE_HEIGHT = Height{32};
-const int TILE_SIZE = 128;
-const auto BULLET_WIDTH = Width{2};
-const auto BULLET_HEIGHT = Height{8};
+#include "Consts.hpp"
 
 
-Renderer::Renderer(Window& window)
+Renderer::Renderer()
+    : _sdl(),
+      _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT})
 {
-    _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (not _renderer)
         throw RendererError("CreateRenderer");

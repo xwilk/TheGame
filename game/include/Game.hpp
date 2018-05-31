@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Sdl.hpp"
 #include "FrameRate.hpp"
-#include "Window.hpp"
 #include "Renderer.hpp"
 #include "Dimensions.hpp"
 #include "Projectile.hpp"
@@ -11,7 +9,6 @@
 #include "Wall.hpp"
 
 class Player;
-class Texture;
 
 
 class Game
@@ -28,9 +25,7 @@ private:
 
     void spawnEnemies(unsigned playerScore);
 
-    Sdl _sdl;
     FrameRate _frame;
-    Window _window;
     Renderer _renderer;
 
     bool _isRunning = true;

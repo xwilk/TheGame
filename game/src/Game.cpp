@@ -3,23 +3,13 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
-#include "Texture.hpp"
-#include "ResourcePath.hpp"
 #include "Point.hpp"
 #include "Collisions.hpp"
-
-const auto SCREEN_WIDTH = Width{640};
-const auto SCREEN_HEIGHT = Height{480};
-const int TILE_SIZE = 128;
-const auto SPRITE_WIDTH = Width{32};
-const auto SPRITE_HEIGHT = Height{32};
-const auto BULLET_WIDTH = Width{2};
-const auto BULLET_HEIGHT = Height{8};
+#include "Consts.hpp"
 
 
 Game::Game()
-    : _window(Width{SCREEN_WIDTH}, Height{SCREEN_HEIGHT}),
-      _renderer(_window)
+    : _renderer()
 {
 }
 
