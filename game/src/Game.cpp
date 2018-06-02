@@ -75,6 +75,6 @@ void Game::update()
 void Game::draw()
 {
     _display.clear();
-    _display.apply(_gameObjects); // I want to pass 'DrawableObjects here'
+    _display.apply(_gameObjects);
     _display.renderPresent();
 }

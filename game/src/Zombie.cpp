@@ -41,7 +41,7 @@ void Zombie::takeDamage()
     --_hitpoints;
 }
 
-bool Zombie::isDead()
+bool Zombie::isDead() const
 {
     return _hitpoints < 1;
 }

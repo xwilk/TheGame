@@ -24,3 +24,13 @@ Circle Projectile::collisionArea() const
 {
     return Circle{_collisionRadius, _position};
 }
+
+void Projectile::takeDamage()
+{
+    _hitpoints = 0;
+}
+
+bool Projectile::isDead() const
+{
+    return _hitpoints == 0;
+}

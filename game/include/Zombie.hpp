@@ -18,7 +18,7 @@ public:
     Circle collisionArea() const;
 
     void takeDamage();
-    bool isDead();
+    bool isDead() const;
 
 private:
     void rotateTowards(Point target);

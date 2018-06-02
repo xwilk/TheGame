@@ -7,7 +7,6 @@
 #include "Wall.hpp"
 #include "Zombie.hpp"
 #include "Consts.hpp"
-#include "Collisions.hpp"
 
 
 struct GameObjects
@@ -23,4 +22,5 @@ struct GameObjects
 
 private:
     void spawnEnemies();
+    void cleanUp();
 };

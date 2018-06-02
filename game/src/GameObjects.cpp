@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "GameObjects.hpp"
 #include "Collisions.hpp"
 
@@ -32,32 +34,38 @@ void GameObjects::update()
         zombie.updatePosition(player.position());
     }
 
-    for (auto i = 0u; i < projectiles.size(); ++i)
+    for (auto& projectile : projectiles)
     {
-        auto& projectile = projectiles[i];
         projectile.updatePosition();
 
-        for (auto j = 0u; j < zombies.size(); ++j)
+        for (auto& zombie : zombies)
         {
-            auto& zombie = zombies[j];
-
             if (objectsCollide(projectile, zombie))
             {
-                projectiles.erase(projectiles.begin() + i);
+                projectile.takeDamage();
                 zombie.takeDamage();
-
-                if (zombie.isDead())
-                {
-                    zombies.erase(zombies.begin() + j);
-                    player.score();
-                }
-
                 break;
             }
         }
     }
 
+    cleanUp();
     spawnEnemies();
+}
+
+void GameObjects::cleanUp()
+{
+    auto isDead = [](const auto& object) { return object.isDead(); };
+
+    using namespace std;
+
+    zombies.erase(
+        remove_if(begin(zombies), end(zombies), isDead),
+        end(zombies));
+
+    projectiles.erase(
+        remove_if(begin(projectiles), end(projectiles), isDead),
+        end(projectiles));
 }
 
 void GameObjects::spawnEnemies()
