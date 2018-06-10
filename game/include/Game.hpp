@@ -4,6 +4,7 @@
 #include "FrameRate.hpp"
 #include "SDLDisplay.hpp"
 #include "GameObjects.hpp"
+#include "InputPort.hpp"
 
 
 class Game
@@ -19,6 +20,7 @@ private:
 
     FrameRate _frame;
     SDLDisplay _display;
+    InputPort _inputPort;
     GameObjects _gameObjects;
 
     bool _isRunning = true;

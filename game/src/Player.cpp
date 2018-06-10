@@ -1,14 +1,18 @@
 #include "Player.hpp"
+#include "InputComponent.hpp"
 
 
-void Player::increaseSpeed()
+Player::Player(InputPort& inputPort)
+    : _inputComponent(std::make_unique<InputComponent>(inputPort))
+{}
+
+Player::~Player()
 {
-    _speed = 2;
 }
 
-void Player::decreaseSpeed()
+void Player::update()
 {
-    _speed = -1;
+    _inputComponent->update(*this);
 }
 
 void Player::rotateTowards(Point target)
@@ -31,18 +35,18 @@ void Player::updatePosition(float deltaTime)
     auto sideMoveVector = Vector2::getForwardVector(
         _rotation + Math::ToRadians(static_cast<float>(_sideMove)));
 
-    if (_speed != 0)
+    if (speed != 0)
     {
         auto forwardVector = Vector2::getForwardVector(_rotation);
         sideMoveVector = (forwardVector + sideMoveVector) / 2;
-        _position += sideMoveVector * _speed * deltaTime;
+        _position += sideMoveVector * speed * deltaTime;
     }
     else
     {
         _position += sideMoveVector * _sideSpeed * deltaTime;
     }
 
-    _speed = 0;
+    speed = 0;
     _sideSpeed = 0;
     _sideMove = SIDEMOVE::NONE;
 }

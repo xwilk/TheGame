@@ -8,14 +8,16 @@
 #include "Zombie.hpp"
 #include "Consts.hpp"
 
+class InputPort;
+
 
 struct GameObjects
 {
-    Player player{};
-    std::vector<Projectile> projectiles{};
-    std::vector<Zombie> zombies{};
-    std::vector<Wall> walls{};
+    GameObjects(InputPort& inputPort);
 
+    Player player;
+    std::vector<Projectile> projectiles;
+    std::vector<Zombie> zombies;
     GameObjects();
 
     void update();

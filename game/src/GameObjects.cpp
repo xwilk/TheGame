@@ -4,29 +4,15 @@
 #include "Collisions.hpp"
 
 
-namespace
-{
-
-inline void makeWalls(std::vector<Wall>& walls, Width screenWidth)
-{
-    int x = 16, y = 16;
-    while (x < screenWidth.get())
-    {
-        walls.emplace_back(Point{float(x), float(y)});
-        x += 32;
-    }
-}
-
-}
-
-GameObjects::GameObjects()
+GameObjects::GameObjects(InputPort& inputPort)
+    : player(inputPort)
 {
     zombies.emplace_back(Point{500, 500});
-    makeWalls(walls, SCREEN_WIDTH);
 }
 
 void GameObjects::update()
 {
+    player.update();
     player.updatePosition();
 
     for (auto& zombie : zombies)

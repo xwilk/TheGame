@@ -5,7 +5,9 @@
 
 
 Game::Game()
-    : _display()
+    : _display(),
+      _inputPort(),
+      _gameObjects(_inputPort)
 {
 }
 
@@ -44,12 +46,12 @@ void Game::handleInput()
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if (currentKeyStates[SDL_SCANCODE_W])
     {
-        _gameObjects.player.increaseSpeed();
+        _inputPort.push(Message{InputMsgId::INCREASE_SPEED});
     }
 
     if (currentKeyStates[SDL_SCANCODE_S])
     {
-        _gameObjects.player.decreaseSpeed();
+        _inputPort.push(Message{InputMsgId::DECREASE_SPEED});
     }
 
     if (currentKeyStates[SDL_SCANCODE_A])

@@ -77,14 +77,6 @@ void SDLDisplay::apply(GameObjects& gameObjects)
             zombie.rotation());
     }
 
-    for (auto& wall : gameObjects.walls)
-    {
-        _textures[GameObjectType::WALL]->render(
-            _renderer,
-            wall.position(),
-            wall.rotation());
-    }
-
     for (auto& projectile : gameObjects.projectiles)
     {
         _textures[GameObjectType::BULLET]->render(
