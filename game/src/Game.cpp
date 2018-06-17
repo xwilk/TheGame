@@ -56,17 +56,17 @@ void Game::handleInput()
 
     if (currentKeyStates[SDL_SCANCODE_A])
     {
-        _gameObjects.player.useSideMove(SIDEMOVE::LEFT);
+        _inputPort.push(Message{InputMsgId::SIDEMOVE_LEFT});
     }
 
     if (currentKeyStates[SDL_SCANCODE_D])
     {
-        _gameObjects.player.useSideMove(SIDEMOVE::RIGHT);
+        _inputPort.push(Message{InputMsgId::SIDEMOVE_RIGHT});
     }
 
     int mouse_x = 0, mouse_y = 0;
     SDL_GetMouseState(&mouse_x, &mouse_y);
-    _gameObjects.player.rotateTowards(Point(mouse_x, mouse_y));
+    _inputPort.push(Message{InputMsgId::ROTATE, Rotate{Point(mouse_x, mouse_y)}});
 }
 
 void Game::update()

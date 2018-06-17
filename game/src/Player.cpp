@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "InputComponent.hpp"
+#include "Math.hpp"
 
 
 Player::Player(InputPort& inputPort)
@@ -13,21 +14,6 @@ Player::~Player()
 void Player::update()
 {
     _inputComponent->update(*this);
-}
-
-void Player::rotateTowards(Point target)
-{
-    auto vectorBetweenPoints = target - _position;
-    vectorBetweenPoints.Normalize();
-
-    _forwardUnitVector = vectorBetweenPoints;
-    _rotation = Math::Atan2(vectorBetweenPoints.x, -vectorBetweenPoints.y);
-}
-
-void Player::useSideMove(SIDEMOVE option)
-{
-    _sideMove = option;
-    _sideSpeed = 1.4;
 }
 
 void Player::updatePosition(float deltaTime)

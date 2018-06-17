@@ -6,22 +6,32 @@
 enum class InputMsgId
 {
     INCREASE_SPEED,
-    DECREASE_SPEED
+    DECREASE_SPEED,
+    SIDEMOVE_LEFT,
+    SIDEMOVE_RIGHT,
+    ROTATE
 };
 
-struct IncreaseSpeed
+struct Rotate
 {
-    static constexpr InputMsgId MESSAGE_ID = InputMsgId::INCREASE_SPEED;
+    Point target;
 };
 
-struct DecreaseSpeed
+union Payload
 {
-    static constexpr InputMsgId MESSAGE_ID = InputMsgId::DECREASE_SPEED;
+    Payload() {}
+    Payload(Rotate r) : rotateTowards(r) {}
+    Rotate rotateTowards;
 };
 
 struct Message
 {
+    Message() {}
+    Message(InputMsgId id) : id(id) {}
+    Message(InputMsgId id, Payload payload) : id(id), payload(payload) {}
+
     InputMsgId id;
+    Payload payload;
 };
 
 class InputPort
