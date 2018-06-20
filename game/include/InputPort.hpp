@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "Point.hpp"
+
 
 enum class InputMsgId
 {

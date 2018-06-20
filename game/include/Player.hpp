@@ -15,6 +15,7 @@ class Player
 public:
     Player(InputPort& inputPort);
     ~Player();
+
     void update();
 
     float rotation() const;
