@@ -55,7 +55,7 @@ void GameObjects::cleanUp()
 
 void GameObjects::spawnEnemies()
 {
-    auto playerScore = player.currentScore();
+    auto playerScore = player.score;
     if (playerScore > zombies.size())
     {
         auto x = playerScore % 2 == 0 ? 100.f : 540.f;
