@@ -19,11 +19,6 @@ void Player::update()
     _moveComponent->update(*this);
 }
 
-Point Player::position() const
-{
-    return _position;
-}
-
 float Player::rotation() const
 {
     return Math::ToDegrees(_rotation);

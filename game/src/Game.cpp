@@ -38,7 +38,7 @@ void Game::handleInput()
         if (e.type == SDL_MOUSEBUTTONDOWN)
         {
             _gameObjects.projectiles.emplace_back(
-                _gameObjects.player.position(),
+                _gameObjects.player.position,
                 _gameObjects.player.rotation());
         }
     }

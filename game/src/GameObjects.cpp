@@ -16,7 +16,7 @@ void GameObjects::update()
 
     for (auto& zombie : zombies)
     {
-        zombie.updatePosition(player.position());
+        zombie.updatePosition(player.position);
     }
 
     for (auto& projectile : projectiles)

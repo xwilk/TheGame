@@ -11,11 +11,11 @@ void MoveComponent::update(Player& player, float deltaTime)
     {
         auto forwardVector = Vector2::getForwardVector(player._rotation);
         sideMoveVector = (forwardVector + sideMoveVector) / 2;
-        player._position += sideMoveVector * player.speed * deltaTime;
+        player.position += sideMoveVector * player.speed * deltaTime;
     }
     else
     {
-        player._position += sideMoveVector * player.sideSpeed * deltaTime;
+        player.position += sideMoveVector * player.sideSpeed * deltaTime;
     }
 
     player.speed = 0;

@@ -17,9 +17,6 @@ public:
     ~Player();
     void update();
 
-    void updatePosition(float deltaTime = 1.f);
-
-    Point position() const;
     float rotation() const;
 
     int speed = 0;
@@ -27,7 +24,7 @@ public:
     SIDEMOVE sideMove = SIDEMOVE::NONE;
 
     float _rotation = 0.0;
-    Point _position{100, 100};
+    Point position{100, 100};
 
 private:
     std::unique_ptr<InputComponent> _inputComponent;

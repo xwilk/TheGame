@@ -66,7 +66,7 @@ void SDLDisplay::apply(GameObjects& gameObjects)
 
     _textures[GameObjectType::PLAYER]->render(
         _renderer,
-        gameObjects.player.position(),
+        gameObjects.player.position,
         gameObjects.player.rotation());
 
     for (auto& zombie : gameObjects.zombies)
