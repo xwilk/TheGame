@@ -30,7 +30,8 @@ void rotate(Player& player, Point target)
     auto vectorBetweenPoints = target - player.position;
     vectorBetweenPoints.Normalize();
 
-    player._rotation = Math::Atan2(vectorBetweenPoints.x, -vectorBetweenPoints.y);
+    player.rotation = Math::ToDegrees(
+        Math::Atan2(vectorBetweenPoints.x, -vectorBetweenPoints.y));
 }
 
 }

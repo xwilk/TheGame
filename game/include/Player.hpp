@@ -18,14 +18,11 @@ public:
 
     void update();
 
-    float rotation() const;
-
+    float rotation = 0.0;
+    Point position{100, 100};
     int speed = 0;
     int sideSpeed = 0;
     SIDEMOVE sideMove = SIDEMOVE::NONE;
-
-    float _rotation = 0.0;
-    Point position{100, 100};
 
 private:
     std::unique_ptr<InputComponent> _inputComponent;

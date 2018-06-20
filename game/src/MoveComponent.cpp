@@ -4,12 +4,14 @@
 
 void MoveComponent::update(Player& player, float deltaTime)
 {
+    auto rotationInRadians = Math::ToRadians(player.rotation);
+
     auto sideMoveVector = Vector2::getForwardVector(
-        player._rotation + Math::ToRadians(static_cast<float>(player.sideMove)));
+        rotationInRadians + Math::ToRadians(static_cast<float>(player.sideMove)));
 
     if (player.speed != 0)
     {
-        auto forwardVector = Vector2::getForwardVector(player._rotation);
+        auto forwardVector = Vector2::getForwardVector(rotationInRadians);
         sideMoveVector = (forwardVector + sideMoveVector) / 2;
         player.position += sideMoveVector * player.speed * deltaTime;
     }

@@ -1,7 +1,6 @@
 #include "Player.hpp"
 #include "InputComponent.hpp"
 #include "MoveComponent.hpp"
-#include "Math.hpp"
 
 
 Player::Player(InputPort& inputPort)
@@ -17,9 +16,4 @@ void Player::update()
 {
     _inputComponent->update(*this);
     _moveComponent->update(*this);
-}
-
-float Player::rotation() const
-{
-    return Math::ToDegrees(_rotation);
 }

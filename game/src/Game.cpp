@@ -39,7 +39,7 @@ void Game::handleInput()
         {
             _gameObjects.projectiles.emplace_back(
                 _gameObjects.player.position,
-                _gameObjects.player.rotation());
+                _gameObjects.player.rotation);
         }
     }
 
