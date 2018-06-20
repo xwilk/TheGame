@@ -43,7 +43,7 @@ private:
     void useSideMove(Player& player, SIDEMOVE option)
     {
         player._sideMove = option;
-        player._sideSpeed = 1.4;
+        player.sideSpeed = 1.4;
     }
 
     void rotate(Player& player, Point target)

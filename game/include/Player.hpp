@@ -24,7 +24,7 @@ public:
 
     int speed = 0;
 
-    int _sideSpeed = 0;
+    int sideSpeed = 0;
     float _rotation = 0.0;
     Point _position{100, 100};
     SIDEMOVE _sideMove = SIDEMOVE::NONE;

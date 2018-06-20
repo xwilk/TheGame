@@ -15,10 +15,10 @@ void MoveComponent::update(Player& player, float deltaTime)
     }
     else
     {
-        player._position += sideMoveVector * player._sideSpeed * deltaTime;
+        player._position += sideMoveVector * player.sideSpeed * deltaTime;
     }
 
     player.speed = 0;
-    player._sideSpeed = 0;
+    player.sideSpeed = 0;
     player._sideMove = SIDEMOVE::NONE;
 }
