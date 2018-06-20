@@ -13,7 +13,6 @@ GameObjects::GameObjects(InputPort& inputPort)
 void GameObjects::update()
 {
     player.update();
-    player.updatePosition();
 
     for (auto& zombie : zombies)
     {

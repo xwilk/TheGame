@@ -7,6 +7,7 @@ add_library(libgame STATIC
     src/FrameRate.cpp
     src/Game.cpp
     src/GameObjects.cpp
+    src/MoveComponent.cpp
     src/Player.cpp
     src/Projectile.cpp
     src/SDLDisplay.cpp

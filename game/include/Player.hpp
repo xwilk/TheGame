@@ -7,6 +7,7 @@
 
 class InputPort;
 class InputComponent;
+class MoveComponent;
 
 
 class Player
@@ -41,4 +42,5 @@ public:
 
 private:
     std::unique_ptr<InputComponent> _inputComponent;
+    std::unique_ptr<MoveComponent> _moveComponent;
 };
