@@ -42,7 +42,7 @@ private:
 
     void useSideMove(Player& player, SIDEMOVE option)
     {
-        player._sideMove = option;
+        player.sideMove = option;
         player.sideSpeed = 1.4;
     }
 

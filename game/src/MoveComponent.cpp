@@ -5,7 +5,7 @@
 void MoveComponent::update(Player& player, float deltaTime)
 {
     auto sideMoveVector = Vector2::getForwardVector(
-        player._rotation + Math::ToRadians(static_cast<float>(player._sideMove)));
+        player._rotation + Math::ToRadians(static_cast<float>(player.sideMove)));
 
     if (player.speed != 0)
     {
@@ -20,5 +20,5 @@ void MoveComponent::update(Player& player, float deltaTime)
 
     player.speed = 0;
     player.sideSpeed = 0;
-    player._sideMove = SIDEMOVE::NONE;
+    player.sideMove = SIDEMOVE::NONE;
 }

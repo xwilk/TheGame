@@ -23,12 +23,11 @@ public:
     float rotation() const;
 
     int speed = 0;
-
     int sideSpeed = 0;
+    SIDEMOVE sideMove = SIDEMOVE::NONE;
+
     float _rotation = 0.0;
     Point _position{100, 100};
-    SIDEMOVE _sideMove = SIDEMOVE::NONE;
-    unsigned score = 0;
 
 private:
     std::unique_ptr<InputComponent> _inputComponent;

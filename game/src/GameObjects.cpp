@@ -35,7 +35,6 @@ void GameObjects::update()
     }
 
     cleanUp();
-    spawnEnemies();
 }
 
 void GameObjects::cleanUp()
@@ -53,13 +52,3 @@ void GameObjects::cleanUp()
         end(projectiles));
 }
 
-void GameObjects::spawnEnemies()
-{
-    auto playerScore = player.score;
-    if (playerScore > zombies.size())
-    {
-        auto x = playerScore % 2 == 0 ? 100.f : 540.f;
-        auto y = zombies.size() % 2 == 0 ? 100.f : 380.f;
-        zombies.emplace_back(Point{x, y});
-    }
-}
